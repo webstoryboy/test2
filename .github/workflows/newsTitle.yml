@@ -1,0 +1,52 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Naver News
+
+# 조건에 따라 실행
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+    
+    - name: library install
+      run: |
+        pip install requests
+        pip install beautifulsoup4
+        pip install pandas
+        pip install lxml
+        
+    - name: run my file
+      run: |
+        python3 news.py
+
+    - name: commits
+      run: |
+        git config --global user.email "webstupids@gmail.com"
+        git config --global user.name "webstoryboy"
+        git add data.csv
+        git commit -m "네이버 뉴스"
+
+    - name: push
+      uses : ad-m/github-push-action@master
+      with : 
+        branch : "main"
+        github_token : $
+        
