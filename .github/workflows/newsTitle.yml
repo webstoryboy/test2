@@ -6,7 +6,7 @@ name: Naver News
 # 조건에 따라 실행
 on:
   schedule : 
-    - cron : "10 * * * * "
+    - cron : "0 * * * * "
   push:
     branches: [ "main" ]
   pull_request:
